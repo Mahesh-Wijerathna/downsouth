@@ -1,7 +1,23 @@
 const mongoose = require('mongoose');
 
 const M_CenterSchema = new mongoose.Schema({
-username: {
+name: {
+    type: String,
+    required: true
+},
+longitude: {
+    type: Number,
+    required: true
+},
+latitude: {
+    type: Number,
+    required: true
+},
+destination : {
+    type: String,
+    required: true
+},
+    username: {
     type: String,
     required: true
 },
