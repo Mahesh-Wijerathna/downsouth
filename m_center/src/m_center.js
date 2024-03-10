@@ -25,6 +25,7 @@ password: {
     type: String,
     required: true
 }
+
 });
 
 module.exports = mongoose.model('M_Center', M_CenterSchema);

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from "react";
 // import Login from "./components/Login2";
 // import Register from "./components/Register";
@@ -8,6 +9,8 @@ import React from "react";
 // import Logout from "./components/Logout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import M_Home from "./pages/m_center/M_home";
 // import Header from "./components/Header";
 // import Footer from "./components/Footer";
 // import SignIn from "./components/SignIn";
@@ -29,6 +32,7 @@ const App = () => {
                 {/* <Header></Header> */}
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
+
                     {/* <Route path="/signin" element={<SignIn></SignIn>} />
                     <Route path="/signup" element={<SignUp></SignUp>} /> */}
                     {/* <Route path="/buyerorders" element={
@@ -64,9 +68,12 @@ const App = () => {
     return (
         <div className="app">
             <Router>
-                <h2 style={{ position: 'absolute', top: '0', right: '0', transform: 'rotate(45deg)', backgroundColor: 'green', color: 'red', padding: '5px' }}>DEV MODE</h2>
+                <h2 style={{ position: 'absolute', top: '10', right: '0', transform: 'rotate(45deg)', backgroundColor: "blue", color: 'red', padding: '5px' }}>DEV MODE</h2>
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
+                    <Route path="/login" element={<Login />}></Route>
+
+                    <Route path="/m_center/home"  element={<M_Home/>}></Route>
                 </Routes>
             </Router>
         </div>
