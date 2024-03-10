@@ -4,7 +4,7 @@ const DestinationModel = require('./destination');
 const bcrypt = require('bcrypt');
 
 
-exports.register =  async (req, res, next) => {
+exports.register_v1 =  async (req, res, next) => {
     console.log("Try to create a destination");
     try{
         const username = req.body.username;
@@ -38,13 +38,32 @@ exports.register =  async (req, res, next) => {
         next(error);
     }
 }
+exports.register = async (req, res, next) => {
+    console.log("Try to create a destination");
+    try{
+        const name = req.body.name;
+        if(!name){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+        const newDestination = new DestinationModel({ 
+            name: name
+        });
+        const result = await newDestination.save();
+        console.log("Destination saved in database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
 
 exports.search_by_name = async (req, res, next) => {
     console.log("Try to search a destination by name");
     try{
-        const name = req.query.name;
+        let name = req.query.name;
         if(!name){
-            throw createHttpError.BadRequest('No name provided');
+            name = '';
         }
         const destination = await DestinationModel.find({name: {$regex: name, $options: 'i'}}).exec();
 

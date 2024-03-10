@@ -4,6 +4,6 @@ const router = express.Router();
 const Controller = require('./controller');
 
 router.post('/', Controller.register);
-router.get('/', Controller.search_by_name);
+router.get('/search', Controller.search_by_name);
 
 module.exports = router;

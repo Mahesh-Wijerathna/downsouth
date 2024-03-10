@@ -13,15 +13,15 @@ const Home = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:4003/api/v1/m_center/search_by_destination?destination=${searchTerm}`
+        `http://localhost:4004/api/v1/destination/search?name=${searchTerm}`
       );
       console.log(response);
       console.log(response.data);
       console.log(
-        response.data.map((destination) => destination.destination)
+        response.data.map((destination) => destination.name)
       );
       setDestinations(
-        response.data.map((destination) => destination.destination)
+        response.data.map((destination) => destination.name)
       );
     } catch (error) {
       console.error(error);
@@ -37,14 +37,19 @@ const Home = () => {
       <br />
       <h1>Search bar </h1>
       <input type="text" placeholder="Search..." onChange={handleSearch} />
-      <button>Search</button>
-      <br />
-      <h1>destinations here</h1>
-      <div>
-        {destinations.map((destination) => (
-          <div key={destination}>{destination}</div>
-        ))}
-      </div>
+      {destinations && destinations.length > 0 && <div className="results-list">
+        {destinations.map((result, id) => {
+        return <div
+              className="search-result"
+              onClick={(e) => alert(`You selected ${result}!`)}
+              >
+                  {result}
+              </div>  
+         
+      })}
+    </div>}      
+      
+
 
       <h1>footer here</h1>
     </div>
