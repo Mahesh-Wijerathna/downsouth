@@ -39,6 +39,7 @@ exports.register =  async (req, res, next) => {
 }
 exports.update = async (req, res, next) => {
     console.log("Try to update a user");
+    
     const username = req.body.username;
     const usertype = req.body.usertype;
     const password = req.body.password;
@@ -47,25 +48,25 @@ exports.update = async (req, res, next) => {
         if(!username || !password || !usertype){
             throw createHttpError.BadRequest('Missing required fields');
         }
-        const isUserExist = await UserModel.findOne({username: username}).exec();
+        const existUser = await UserModel.findOne({username: username}).exec();
 
-        if(!isUserExist)
+        if(!existUser)
             throw createHttpError(400, 'User not found');
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        
+        existUser.username = username;
+        existUser.usertype = usertype;
+        existUser.password = hashedPassword;
 
-        const newUser = new UserModel({
-            username: username,
-            usertype: usertype,
-            password: hashedPassword
-        });
 
-        const result = await newUser.save();
+
+        const result = await existUser.save();
         console.log("User updated in database successfully!");
         res.status(201).send(result);
 
     }
-    catch{
+    catch(err)  {
         console.log("error in updating a user");
         console.log(err);
         next(err);
@@ -95,8 +96,6 @@ exports.delete = async (req, res, next) => {
         next(err);
     }
 }
-
-
 exports.login = async (req, res, next) => {
     console.log("Try to login a user");
     const username = req.body.username;
@@ -139,4 +138,7 @@ exports.login = async (req, res, next) => {
         console.log(err);
         next(err);
     }
+}
+exports.verifyToken = function (req, res, next) {
+    res.status(200).send('valid');
 }

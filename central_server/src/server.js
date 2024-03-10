@@ -1,9 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const proxy = require('express-http-proxy');
+const verify = require('./verify');
+
+
 const app = express();
 app.use(cors());
-app.use(express.json());
+
+
+
+
 
 app.use('/auth'    , proxy('http://localhost:4001'));
 app.use('/tourist'  , proxy('http://localhost:4002'));

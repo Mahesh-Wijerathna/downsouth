@@ -47,10 +47,16 @@ const Home = () => {
               </div>  
          
       })}
-    </div>}      
+    </div>}   
+    <button
+        
+        onMouseOver={(e) => e.target.style.cursor = "pointer"}
+
+        onClick={(e) => alert("You clicked the search button!")}
+    >Search</button>   
       
 
-
+      
       <h1>footer here</h1>
     </div>
   );

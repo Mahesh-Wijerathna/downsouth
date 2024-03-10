@@ -1,18 +1,24 @@
 const mongoose = require('mongoose');
 
 const TouristSchema = new mongoose.Schema({
-username: {
+name: {
     type: String,
     required: true
 },
-// Image: {
-//     type: String,
-//     required: true
-// },
-password: {
+username: {
+    // ! email is the username
+    type: String,
+    required: true
+},
+country: {
+    type: String,
+    required: true
+},
+phone_number: {
     type: String,
     required: true
 }
+
 });
 
 module.exports = mongoose.model('Tourist', TouristSchema);

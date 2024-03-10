@@ -4,16 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev":  "nodemon index.js",
-    "tourist" : "nodemon ../tourist/src/app.js",
-    "m_center" : "nodemon ../m_center/index.js",
-    "all" : "npm-run-all --parallel dev tourist m_center"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "tourist": "nodemon ../tourist/src/app.js",
+    "m_center": "nodemon ../m_center/index.js",
+    "all": "npm-run-all --parallel dev tourist m_center"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.7",
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "express-http-proxy": "^2.0.0",

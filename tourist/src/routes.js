@@ -4,6 +4,8 @@ const router = express.Router();
 const Controller = require('./controller');
 
 router.post('/', Controller.register);
-router.post('/search', Controller.search); 
+router.put('/', Controller.update);
+router.delete('/', Controller.delete);
+// router.get('/search', Controller.search); 
 
 module.exports = router;

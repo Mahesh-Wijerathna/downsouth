@@ -4,7 +4,7 @@ const TouristModel = require('./tourist');
 const bcrypt = require('bcrypt');
 
 
-exports.register =  async (req, res, next) => {
+exports.register_v1 =  async (req, res, next) => {
     console.log("Try to create a tourist");
     try{
         const username = req.body.username;
@@ -69,3 +69,111 @@ exports.register =  async (req, res, next) => {
         res.end();
     }}
 
+exports.register = async (req, res, next) => {
+    console.log("Try to create a tourist");
+    try{
+        const name = req.body.name;
+        const username = req.body.username;
+        const country = req.body.country;
+        const phone_number = req.body.phone_number;
+        const password = req.body.password;
+
+        if(!name || !username || !country || !phone_number || !password){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+        const isTouristExist = await TouristModel.findOne({username: username}).exec();
+        if(isTouristExist){
+            throw createHttpError(400, 'Tourist already exists');   
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newTourist = new TouristModel({
+            name: name,
+            username: username,
+            country: country,
+            phone_number: phone_number,
+            password: hashedPassword
+        });
+        const result = await newTourist.save();
+
+              await axios.post('http://localhost:4001/api/v1/auth', {
+                username: username,
+                usertype: 'tourist',
+                password: password
+            })
+            .then((res) => {
+                console.log(`statusCode: ${res.statusCode}`)
+                console.log(res)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+        console.log("Tourist saved in database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+exports.update = async (req, res, next) => {
+    console.log("Try to update a tourist");
+    try{
+        const username = req.body.username;
+        const name = req.body.name;
+        const country = req.body.country;
+        const phone_number = req.body.phone_number;
+        const password = req.body.password;
+        if(!username || !name || !country || !phone_number || !password){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const result = await TouristModel.findOneAndUpdate({username: username}, {name: name, country: country, phone_number: phone_number}, {new: true});
+            await axios.put('http://localhost:4001/api/v1/auth', {
+                username: username,
+                usertype: 'tourist',
+                password: password
+            })
+            .then((res) => {
+                console.log(`statusCode: ${res.statusCode}`)
+                console.log(res)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+
+
+        console.log("Tourist updated in database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+exports.delete = async (req, res, next) => {
+    console.log("Try to delete a tourist");
+    try{
+        const username = req.body.username;
+        if(!username){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+        const result = await TouristModel.findOneAndDelete({username: username});
+        await axios.delete('http://localhost:4001/api/v1/auth', {
+            username: username,
+            usertype: 'tourist'
+        })
+        .then((res) => {
+            console.log(`statusCode: ${res.statusCode}`)
+            console.log(res)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+        console.log("Tourist deleted in database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+        
