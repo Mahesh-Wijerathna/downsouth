@@ -122,11 +122,11 @@ exports.register = async (req, res, next) => {
 
 exports.search_by_destination = async (req, res, next) => {
     try{
-        const destination = req.query.destination;
+        let destination = req.query.destination;
         if(!destination){
-            throw createHttpError.BadRequest('Missing destination');
+            destination = ""
         }
-        const result = await M_CenterModel.find({ destination: { $regex: destination, $options: 'i' } }).exec();
+         result = await M_CenterModel.find({ destination: { $regex: destination, $options: 'i' } }).exec();
         if(!result){
             throw createHttpError.NotFound('No M_Center found');
         }
