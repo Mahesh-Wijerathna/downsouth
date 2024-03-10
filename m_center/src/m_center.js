@@ -7,21 +7,30 @@ name: {
 },
 longitude: {
     type: Number,
-    required: true
+    required: false
 },
 latitude: {
     type: Number,
-    required: true
+    required: false
 },
 destination : {
     type: String,
     required: true
 },
-    username: {
+phone_number: {
     type: String,
     required: true
 },
-password: {
+owner_name: {
+    type: String,
+    required: true
+},
+description: {
+    type: String,
+    required: true
+},
+username: {
+    // ! email is used as username
     type: String,
     required: true
 }

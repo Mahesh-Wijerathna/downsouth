@@ -63,7 +63,7 @@ exports.register_v1 =  async (req, res, next) => {
     }
 }
 
-exports.register = async (req, res, next) => {
+exports.register_v2 = async (req, res, next) => {
     console.log("Try to create a m_center");
     try{
         const name = req.body.name;
@@ -118,6 +118,72 @@ exports.register = async (req, res, next) => {
     }
 }
 
+exports.register = async (req, res, next) => {
+    console.log("Try to create a m_center");
+    try{
+        const name = req.body.name;
+        const longitude = req.body.longitude;
+        const latitude = req.body.latitude;
+        const destination = req.body.destination;
+        const phone_number = req.body.phone_number;
+        const owner_name = req.body.owner_name;
+        const description = req.body.description;
+        const username = req.body.username;
+        const password = req.body.password;
+
+      
+        
+
+        if(!name  || !destination || !phone_number || !owner_name || !description || !username || !password){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+
+        const isM_CenterExist = await M_CenterModel.findOne({username: username}).exec();
+
+        if(isM_CenterExist){
+            throw createHttpError(400, 'M_Center already exists');   
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newM_Center = new M_CenterModel({
+            name: name,
+            longitude: longitude,
+            latitude: latitude,
+            destination: destination,
+            phone_number: phone_number,
+            owner_name: owner_name,
+            description: description,
+            username: username,
+            password: hashedPassword
+        });
+
+        const result = await newM_Center.save();
+
+                axios.post('http://localhost:4001/api/v1/auth', {
+                    username: username,
+                    usertype: 'm_center',
+                    password: password
+                })
+                .then((res) => {
+                    console.log(`statusCode: ${res.statusCode}`)
+                    console.log(res)
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+            
+        console.log("M_Center saved in database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+        
+        
+        
+        
 
 
 exports.search_by_destination = async (req, res, next) => {
