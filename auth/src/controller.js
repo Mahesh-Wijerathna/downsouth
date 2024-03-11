@@ -122,8 +122,9 @@ exports.login = async (req, res, next) => {
                 userId: user._id, 
                 username: user.username,
             },
-            process.env.JWT_TOKEN,
-            {expiresIn: '6h'}
+            process.env.JWT_TOKEN,            
+            {expiresIn: '30d'}
+            
         );
         user.token = accessToken;
         const result = await user.save();

@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import M_Home from "./pages/m_center/M_home";
+import A_home from "./pages/admin/A_home";
 // import Header from "./components/Header";
 // import Footer from "./components/Footer";
 // import SignIn from "./components/SignIn";
@@ -74,6 +75,8 @@ const App = () => {
                     <Route path="/login" element={<Login />}></Route>
 
                     <Route path="/m_center/home"  element={<M_Home/>}></Route>
+
+                    <Route path="/admin/home"  element={<A_home/>}></Route>
                 </Routes>
             </Router>
         </div>

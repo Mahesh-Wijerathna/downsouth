@@ -36,6 +36,7 @@ const Login =  () => {
             console.log(response.data.usertype);
 
             if(response.data.usertype === "m_center") window.location = "/m_center/home"
+            else if(response.data.usertype === "admin") window.location = "/admin/home"
                 
             // redirect to the logout page
             // window.location = "/logout";
@@ -51,7 +52,7 @@ const Login =  () => {
                 <h1>Login Page </h1>
 
                 <input
-                    type="email"
+                    type="String"
                     value={email}
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}

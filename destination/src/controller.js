@@ -2,6 +2,7 @@ createHttpError = require('http-errors');
 const axios  = require('axios');
 const DestinationModel = require('./destination');
 const bcrypt = require('bcrypt');
+const createHttpError = require('http-errors');
 
 
 exports.register_v1 =  async (req, res, next) => {
@@ -57,13 +58,32 @@ exports.register = async (req, res, next) => {
     }
 }
 
+exports.update = async (req, res, next) => {
+    console.log("Try to update a destination");
+    try{
+        const id = req.params.id;
+        const name = req.body.name;
+        if(!name){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+        const destination = await DestinationModel.findByIdAndUpdate(id, {name: name}, {new: true}).exec();
+        if(!destination){
+            throw createHttpError.NotFound('Destination not found');
+        }
+        res.status(200).send(destination);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
 
 exports.search_by_name = async (req, res, next) => {
     console.log("Try to search a destination by name");
     try{
         let name = req.query.name;
         if(!name){
-            name = '';
+            name= "@#^##%#*&"
         }
         const destination = await DestinationModel.find({name: {$regex: name, $options: 'i'}}).exec();
 

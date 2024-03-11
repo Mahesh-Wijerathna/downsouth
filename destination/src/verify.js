@@ -4,10 +4,10 @@ const axios = require('axios');
 module.exports = async function (req, res, next) {
     console.log("Inside verifyToken.js");
     //return next();
-    //const token = req.query.token || req.headers['x-access-token'];
-    const token = "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWVkOTUyNzQ0NTM5ODU4NzNmMmI1MmEiLCJ1c2VybmFtZSI6ImRldkBkZXYuZGV2IiwiaWF0IjoxNzEwMTIwMjQ4LCJleHAiOjE3MTAxNDE4NDh9.7Hdi-dVrfj1_Caj5MJguAskZHrKmQxqb2XrfPLkDrlY";
+    const token = req.body.token || req.query.token || req.headers['x-access-token'];
+    
      console.log("Token: ", token);
-
+    
     if (!token) {
         res.status(401).send('Token not provided');
     }
@@ -17,7 +17,7 @@ module.exports = async function (req, res, next) {
         console.log("Try to call auth service to verify token");
         await axios.get(`http://localhost:4001/api/v1/auth/verifytoken?token=${token}`, {
             headers: {
-                'x-access-toke': token,
+                'x-access-token': token,
                 
             },
             token: token

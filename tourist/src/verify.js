@@ -17,7 +17,7 @@ module.exports = async function (req, res, next) {
         console.log("Try to call auth service to verify token");
         await axios.get(`http://localhost:4001/api/v1/auth/verifytoken?token=${token}`, {
             headers: {
-                'x-access-toke': token,
+                'x-access-token': token,
                 
             },
             token: token

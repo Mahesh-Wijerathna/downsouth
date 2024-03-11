@@ -155,7 +155,7 @@ exports.register = async (req, res, next) => {
             owner_name: owner_name,
             description: description,
             username: username,
-            password: hashedPassword
+            
         });
 
         const result = await newM_Center.save();
@@ -180,7 +180,90 @@ exports.register = async (req, res, next) => {
         next(error);
     }
 }
-        
+
+exports.update = async (req, res, next) => {
+    console.log("Try to update a m_center");
+    try{
+        const id = req.params.id;
+        const name = req.body.name;
+        const longitude = req.body.longitude;
+        const latitude = req.body.latitude;
+        const destination = req.body.destination;
+        const phone_number = req.body.phone_number;
+        const owner_name = req.body.owner_name;
+        const description = req.body.description;
+        const username = req.body.username;
+        const password = req.body.password;
+
+        if(!name || !longitude || !latitude || !destination || !phone_number || !owner_name || !description || !username || !password){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const result = await M_CenterModel.findByIdAndUpdate(id, {
+            name: name,
+            longitude: longitude,
+            latitude: latitude,
+            destination: destination,
+            phone_number: phone_number,
+            owner_name: owner_name,
+            description: description,
+            username: username,
+            
+        }, {new: true}).exec();
+
+            await axios.put('http://localhost:4001/api/v1/auth', {
+                username: username,
+                usertype: 'm_center',
+                password: password
+            })
+            .then((res) => {
+                console.log(`statusCode: ${res.statusCode}`)
+                console.log(res)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+
+        if(!result){
+            throw createHttpError.NotFound('M_Center does not exist');
+        }
+        console.log("M_Center updated successfully!");
+        res.status(200).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+   
+exports.delete = async (req, res, next) => {
+    console.log("Try to delete a m_center");
+    try{
+        const id = req.params.id;
+        const result = await M_CenterModel.findByIdAndDelete(id).exec();
+                await axios.delete('http://localhost:4001/api/v1/auth', {
+                    username: username,
+                    usertype: 'm_center',
+                    password: password
+                })
+                .then((res) => {
+                    console.log(`statusCode: ${res.statusCode}`)
+                    console.log(res)
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        if(!result){
+            throw createHttpError.NotFound('M_Center does not exist');
+        }
+        console.log("M_Center deleted successfully!");
+        res.status(200).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
         
         
         
