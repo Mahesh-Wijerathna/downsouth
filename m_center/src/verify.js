@@ -43,14 +43,4 @@ module.exports = async function (req, res, next) {
     }
 
 
-    axios.get('/users', {
-        headers: {
-            'MyCustomHeader1': '1',
-            'MyCustomHeader2': '2'
-        }
-    })
-    .then((res) => console.log(res.data))
-    .catch((err) => console.error(err));
-
-
 }

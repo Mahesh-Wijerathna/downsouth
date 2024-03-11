@@ -6,9 +6,15 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "tourist": "nodemon ../tourist/src/app.js",
-    "m_center": "nodemon ../m_center/index.js",
-    "all": "npm-run-all --parallel dev tourist m_center"
+    "central" : "nodemon src/server.js",
+    "auth" : "cd ../auth && npm run dev",
+    "tourist" : "cd ../tourist && npm run dev",
+    "m_center" : "cd ../m_center && npm run dev",
+    "destination" : "cd ../destination && npm run dev",
+    "appointment" : "cd ../appointment && npm run dev",
+    
+    
+    "all": "npm-run-all --parallel central auth tourist m_center destination appointment"
   },
   "keywords": [],
   "author": "",
