@@ -1,0 +1,55 @@
+.srch-text {
+    position: absolute;
+   
+    transform: translate(-50%, -50%);
+    background-color: transparent; 
+    color: black; 
+    padding: 5px; 
+    font-size: 35px;
+    margin-left:600px;
+    margin-top: 60px;
+    font-weight: bold;
+    align-items: left;
+    font-family: 'Franklin Gothic Medium', sans-serif;
+  }
+
+  .srchbar {
+    position: absolute;
+    margin-left: 500px;
+    margin-top: 150px;
+  }
+  
+  .search-input {
+    border: none; /* Remove default border */
+    border-radius: 40px; /* Rounded corners */
+    padding: 15px 40px; /* Add padding for better appearance */
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 1px #fff inset; /* Add a thin white border to mimic the border */
+    background-color: transparent; /* Transparent background */
+    color: #180101; /* Text color */
+  }
+  
+  
+  .search-button {
+    position: absolute;
+    top: 155px; /* Adjust as needed */
+    left: 730px; /* Adjust as needed */
+}
+
+
+  
+  .search-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: #fff;
+    
+    margin-top: -2px; /* Adjust as needed */
+    margin-left: 5px; 
+
+  }
+ 
+   
