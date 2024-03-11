@@ -41,4 +41,6 @@ exports.register =  async (req, res, next) => {
         res.status(201).send(result);
     }
     catch(error){
-        next(error
+        next(error);
+    }
+}
