@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "289742049866",
+    "project_id": "touristmedicalapp",
+    "storage_bucket": "touristmedicalapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289742049866:android:f750c266008ccc7927ccb3",
+        "android_client_info": {
+          "package_name": "com.example.tourist_medical_help_mobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrpck45gu0YXMlRnJx9Aa-iDvXLoIx0oQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
