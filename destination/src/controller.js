@@ -1,5 +1,5 @@
-createHttpError = require('http-errors');
-const axios  = require('axios');
+
+const axios  = require('axios'); 
 const DestinationModel = require('./destination');
 const bcrypt = require('bcrypt');
 const createHttpError = require('http-errors');

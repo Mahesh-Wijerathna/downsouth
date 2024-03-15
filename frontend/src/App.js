@@ -22,6 +22,7 @@ import A_home from "./pages/admin/A_home";
 const App = () => {
 
     // const user = useSelector(selectUser);
+    
     // console.log(user);
     const dev = true;
     if(dev === false)
@@ -76,7 +77,7 @@ const App = () => {
 
                     <Route path="/m_center/home"  element={<M_Home/>}></Route>
 
-                    <Route path="/admin/home"  element={<A_home/>}></Route>
+                    <Route path="/admin"  element={<A_home/>}></Route>
                 </Routes>
             </Router>
         </div>

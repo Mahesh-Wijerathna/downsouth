@@ -5,9 +5,11 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../slices/userSlice";
 //import { useDispatch } from "react-redux";
 import axios from "axios";
+import avatar from "../../assets/images/profile.png";  //_
 
 const M_Home = () => {
     const [name, setName] = useState('');
+    const [postImage, setPostImage] = useState( { myFile : ""})  //_
     
     //const dispatch = useDispatch();
     const user = useSelector(selectUser);
@@ -23,6 +25,7 @@ const M_Home = () => {
                 "x-access-token": user.token,
             },
             name: name,
+            image: postImage.myFile,
             token: user.token
         })
         .then((response) => {
@@ -38,6 +41,13 @@ const M_Home = () => {
 
         
     };
+    //_ file upload
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertToBase64(file);
+        console.log(base64)
+        setPostImage({ ...postImage, myFile : base64 })
+      }
 
     return (
         <div>
@@ -49,11 +59,40 @@ const M_Home = () => {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter New Destination Name"
                 />
+                /_ file upload 
+                    <label htmlFor="file-upload" className='custom-file-upload'>
+                        <img src={ avatar} alt="" />
+                    </label>
+
+                    <input 
+                    type="file"
+                    lable="Image"
+                    name="myFile"
+                    id='file-upload'
+                    accept='.jpeg, .png, .jpg'
+                    onChange={(e) => handleFileUpload(e)}
+                    />
+
+                    <h3>Doris Wilder</h3>
+                    <span>Designer</span>
                 <button type="submit">Submit</button>
             </form>
         </div>
     );
 };
+//_
+function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      };
+      fileReader.onerror = (error) => {
+        reject(error)
+      }
+    })
+  }
 
 
 export default M_Home;

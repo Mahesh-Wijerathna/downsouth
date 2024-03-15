@@ -2,6 +2,8 @@ createHttpError = require('http-errors');
 const axios = require('axios');
 const AppointmentModel = require('./appointment');
 const bcrypt = require('bcrypt');
+const { version } = require('mongoose');
+
 
 exports.register =  async (req, res, next) => {
     console.log("Try to create a appointment");
@@ -38,6 +40,59 @@ exports.register =  async (req, res, next) => {
         console.log("Appointment saved in database successfully!");
         
 
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+exports.update = async (req, res, next) => {
+    console.log("Try to update a appointment");
+    try{
+        const appointment_id = req.body.appointment_id;
+        const date = req.body.date;
+        const time = req.body.time;
+        const doctor = req.body.doctor;
+        const patient = req.body.patient;
+        const description = req.body.description;
+        const username = req.body.username;
+
+        if(!appointment_id || !date || !time || !doctor || !patient || !description || !username){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+
+        const isAppointmentExist = await AppointmentModel.findOne({appointment_id: appointment_id}).exec();
+
+        if(!isAppointmentExist){
+            throw createHttpError(404, 'Appointment does not exist');   
+        }
+
+        const result = await AppointmentModel.updateOne({appointment_id: appointment_id}, req.body);
+        console.log("Appointment updated in database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+exports.delete = async (req, res, next) => {
+    console.log("Try to delete a appointment");
+    try{
+        const appointment_id = req.params.appointment_id;
+        if(!appointment_id){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+
+        const isAppointmentExist = await AppointmentModel.findOne({appointment_id: appointment_id}).exec();
+
+        if(!isAppointmentExist){
+            throw createHttpError(404, 'Appointment does not exist');   
+        }
+
+        const result = await AppointmentModel.deleteOne({appointment_id: appointment_id});
+        console.log("Appointment deleted from database successfully!");
         res.status(201).send(result);
     }
     catch(error){
