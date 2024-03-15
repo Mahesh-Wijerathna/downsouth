@@ -12,8 +12,10 @@
     "m_center" : "cd ../m_center && npm run dev",
     "destination" : "cd ../destination && npm run dev",
     "appointment" : "cd ../appointment && npm run dev",
-    
-    
+
+    "ins_"
+
+    "ins_all" : "npm install",   
     "all": "npm-run-all --parallel central auth tourist m_center destination appointment"
   },
   "keywords": [],
