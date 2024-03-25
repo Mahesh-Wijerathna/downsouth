@@ -9,6 +9,7 @@ module.exports = async function (req, res, next) {
      console.log("Token: ", token);
     
     if (!token) {
+        console.log("Token not provided");
         res.status(401).send('Token not provided');
     }
 // console.log("JWT Token Key : " , process.env.JWT_TOKEN);

@@ -17,7 +17,14 @@ app.use('/m_center'   , proxy('http://localhost:4003'));
 app.use('/destination', proxy('http://localhost:4004'));
 app.use('/appointment', proxy('http://localhost:4005'));
 app.use('/',(req,res,next) => {
-    return res.status(200).json({message: 'Welcome to the central server'});
+    try{
+        return res.status(200).json({message: 'Welcome to the central server'});
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({message: 'Error in central server'});
+    }
+
+    
 });
 app.listen(4000, () => {
     console.log('Central server running on port 4000');

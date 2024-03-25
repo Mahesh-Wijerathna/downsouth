@@ -7,6 +7,7 @@ const app = require('./app');
 mongoose.connect(   
     process.env.MONGO_URL,
     {}).then(result => {
+        console.clear();
         console.log('Connected to MongoDB Appointment Database');
         app.listen(port,() => {
             console.log(`Appointment Server is running on port ${port}`);

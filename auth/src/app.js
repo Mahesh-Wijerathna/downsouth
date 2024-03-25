@@ -19,7 +19,14 @@ app.use('/api/v1/auth', Router);
 
 
 app.get('/', (req, res,next) => {
-    res.send('Welcome to the Auth API!');
+    //res.send('Welcome to the Auth API!');
+    try{
+        res.status(200).send('Welcome to the Auth API!');
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({message: 'Error in auth server'});
+    }
 });
 
 module.exports = app;

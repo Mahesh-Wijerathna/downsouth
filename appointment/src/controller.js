@@ -16,6 +16,7 @@ exports.register =  async (req, res, next) => {
         const description = req.body.description;
         const username = req.body.username;
 
+        console.log(req.body);
         if(!appointment_id || !date || !time || !doctor || !patient || !description || !username){
             throw createHttpError.BadRequest('Missing required fields');
         }
@@ -79,9 +80,14 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     console.log("Try to delete a appointment");
+    // check whether request is coming from frontend or testing
+    console.log(req.body);
+
+    console.log(req.body.appointment_id);
     try{
-        const appointment_id = req.params.appointment_id;
+        const appointment_id =  req.body.appointment_id ;
         if(!appointment_id){
+            res.status(400).send('Missing required fields');
             throw createHttpError.BadRequest('Missing required fields');
         }
 
@@ -99,3 +105,33 @@ exports.delete = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.getOne = async (req, res, next) => {
+    console.log("Try to get one appointment");
+    try{
+        const appointment_id = req.params.appointment_id;
+        if(!appointment_id){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+
+        const result = await AppointmentModel.findOne({appointment_id: appointment_id}).exec();
+        console.log("Appointment retrieved from database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+exports.getAll = async (req, res, next) => {
+    console.log("Try to get all appointments");
+    try{
+        const result = await AppointmentModel.find().exec();
+        console.log("Appointments retrieved from database successfully!");
+        res.status(201).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+

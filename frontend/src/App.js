@@ -12,6 +12,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import M_Home from "./pages/m_center/M_home";
 import A_home from "./pages/admin/A_home";
+//import Destination from "./pages/test/destination";
+import CreateAppointment from "./pages/test/appointment/create";
+import UpdateAppointment from "./pages/test/appointment/update";
+
 // import Header from "./components/Header";
 // import Footer from "./components/Footer";
 // import SignIn from "./components/SignIn";
@@ -24,6 +28,7 @@ const App = () => {
     // const user = useSelector(selectUser);
     
     // console.log(user);
+    
     const dev = true;
     if(dev === false)
     return (
@@ -72,12 +77,14 @@ const App = () => {
             <Router>
                 <h2 style={{ position: 'absolute', top: '10', right: '0', transform: 'rotate(45deg)', backgroundColor: "blue", color: 'red', padding: '5px' }}>DEV MODE</h2>
                 <Routes>
-                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/" element={<CreateAppointment/>}></Route>
                     <Route path="/login" element={<Login />}></Route>
 
                     <Route path="/m_center/home"  element={<M_Home/>}></Route>
 
                     <Route path="/admin"  element={<A_home/>}></Route>
+
+                    <Route path="/appointment/update"  element={<UpdateAppointment/>}></Route>
                 </Routes>
             </Router>
         </div>

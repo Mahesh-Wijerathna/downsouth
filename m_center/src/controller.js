@@ -286,3 +286,51 @@ exports.search_by_destination = async (req, res, next) => {
         next(error);
     }
 }
+
+
+exports.search_by_radius = async (req, res, next) => {
+    try{
+        let longitude = req.query.longitude;
+        let latitude = req.query.latitude;
+        let radius = req.query.radius;
+        if(!longitude || !latitude || !radius){
+            throw createHttpError.BadRequest('Missing required fields');
+        }
+        const searchCenter = { type: "Point", coordinates: [longitude, latitude] };
+        const query = {
+            location: {
+              $geoWithin: {
+                $centerSphere: [searchCenter, radius / 6371] // Convert k meters to radians
+              }
+            }
+          };
+        result = await M_CenterModel.find(query).exec();
+        if(!result){
+            throw createHttpError.NotFound('No M_Center found');
+        }
+        res.status(200).send(result);
+    }
+    catch(error){
+        next(error);
+    }
+}
+/*************************************
+
+async function findLocationsInRadius(longitude, latitude, radiusInMeters) {
+  try {
+    const searchCenter = { type: "Point", coordinates: [longitude, latitude] };
+    const query = {
+      location: {
+        $geoWithin: {
+          $centerSphere: [searchCenter, radiusInMeters / 6371000] // Convert meters to radians
+        }
+      }
+    };
+    const locations = await Location.find(query);
+    console.log(locations); // Or return locations for further processing
+  } catch (err) {
+    console.error('Error fetching locations:', err);
+  }
+
+
+*******************************************/

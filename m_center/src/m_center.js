@@ -5,13 +5,9 @@ name: {
     type: String,
     required: true
 },
-longitude: {
-    type: Number,
-    required: false
-},
-latitude: {
-    type: Number,
-    required: false
+location: {
+    type: { type: String, default: "Point" },
+    coordinates: [Number] 
 },
 destination : {
     type: String,

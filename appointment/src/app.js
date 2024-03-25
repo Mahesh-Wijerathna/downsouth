@@ -17,7 +17,7 @@ app.use(cors());
 app.use('/api/v1/appointment', Router);
 
 app.get('/', (req, res,next) => {
-    res.send('Welcome to the Appointment API!');
+    res.send({message : "Welcome to the Appointment API!"});
 });
 
 module.exports = app;

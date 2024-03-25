@@ -17,7 +17,14 @@ app.use('/api/v1/destination', Router);
 
 
 app.get('/', (req, res,next) => {
-    res.status(200).send('Welcome to the Destination API!');
+    try{
+        res.status(200).send('Welcome to the Destination API!');
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({message: 'Error in destination server'});
+    }
+    
 });
 
 module.exports = app;
